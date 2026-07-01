@@ -1,0 +1,205 @@
+.wrap{
+  --ink:#1c2b2b;
+  --paper:#f2ede3;
+  --line:#c9bfa8;
+  --gold:#a8823a;
+  --pine:#2f5d50;
+  --play:#3f8f7a;
+  --red:#9c4a3a;
+
+  max-width:720px;
+  margin:0 auto;
+  padding:32px 20px 80px;
+  background:var(--paper);
+  color:var(--ink);
+  font-family: "Iowan Old Style","Palatino Linotype",Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+.header{
+  border-bottom:2px solid var(--ink);
+  padding-bottom:16px;
+  margin-bottom:24px;
+}
+
+.eyebrow{
+  font-family: "Courier New", monospace;
+  font-size:11px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+
+.h1{
+  font-size:28px;
+  margin:0 0 8px;
+  font-weight:600;
+  line-height:1.15;
+}
+
+.sub{
+  font-size:14.5px;
+  color:#4a4a42;
+  line-height:1.5;
+  max-width:56ch;
+}
+
+.result{
+  margin:28px 0 32px;
+  padding:22px 20px;
+  background:var(--ink);
+  color:var(--paper);
+  border-radius:2px;
+  position:relative;
+  overflow:hidden;
+}
+.result::before{
+  content:"";
+  position:absolute; left:0; top:0; bottom:0; width:5px;
+  background:var(--gold);
+}
+.resultLabel{
+  font-family:"Courier New",monospace;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#c9bfa8;
+  margin-bottom:6px;
+}
+.resultNum{
+  font-size:44px;
+  font-weight:700;
+  line-height:1;
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.unit{
+  font-size:16px;
+  font-weight:400;
+  color:#c9bfa8;
+  font-family: "Iowan Old Style",Georgia,serif;
+}
+.resultFoot{
+  margin-top:10px;
+  font-size:13px;
+  color:#a8a89a;
+  font-family:"Courier New",monospace;
+}
+
+.controls{
+  display:grid;
+  gap:20px;
+}
+.field{
+  border-top:1px solid var(--line);
+  padding-top:14px;
+}
+.fieldRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:8px;
+  gap:12px;
+}
+.fieldName{
+  font-size:14px;
+  font-weight:600;
+}
+.fieldVal{
+  font-family:"Courier New",monospace;
+  font-size:14px;
+  color:var(--pine);
+  font-weight:700;
+  white-space:nowrap;
+}
+.fieldNote{
+  font-size:12px;
+  color:#7a7a6c;
+  margin-bottom:8px;
+  line-height:1.4;
+}
+
+.range{
+  width:100%;
+  -webkit-appearance:none;
+  height:4px;
+  background:var(--line);
+  border-radius:2px;
+  outline:none;
+}
+.range::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:18px;height:18px;
+  border-radius:50%;
+  background:var(--pine);
+  cursor:pointer;
+  border:2px solid var(--paper);
+  box-shadow:0 0 0 1px var(--pine);
+}
+.range::-moz-range-thumb{
+  width:18px;height:18px;
+  border-radius:50%;
+  background:var(--pine);
+  cursor:pointer;
+  border:2px solid var(--paper);
+  box-shadow:0 0 0 1px var(--pine);
+}
+
+.chartbox{
+  margin-top:32px;
+  border-top:2px solid var(--ink);
+  padding-top:18px;
+}
+.chartbox h2{
+  font-size:15px;
+  margin:0 0 4px;
+}
+.chartNote{
+  font-size:12.5px;
+  color:#7a7a6c;
+  margin-bottom:14px;
+}
+.canvas{
+  width:100%;
+  height:180px;
+  display:block;
+}
+
+.formula{
+  margin-top:32px;
+  border-top:2px solid var(--ink);
+  padding-top:18px;
+}
+.formula h2{
+  font-size:15px;
+  margin:0 0 10px;
+}
+.formulaCode{
+  display:block;
+  font-family:"Courier New",monospace;
+  font-size:13px;
+  background:#e8e0cf;
+  padding:14px 16px;
+  border-radius:2px;
+  line-height:1.7;
+  white-space:pre-wrap;
+  color:var(--ink);
+}
+.sourcesBox{
+  margin-top:24px;
+  font-size:11.5px;
+  color:#8a8a7c;
+  line-height:1.6;
+  border-top:1px solid var(--line);
+  padding-top:14px;
+}
+.caveat{
+  margin-top:14px;
+  font-size:12.5px;
+  color:var(--red);
+  line-height:1.5;
+  font-style:italic;
+}
