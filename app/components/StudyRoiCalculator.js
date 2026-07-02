@@ -110,22 +110,9 @@ export default function StudyRoiCalculator() {
   );
 
   const fvStr = fv.toLocaleString(undefined, { maximumFractionDigits: 0 });
-  const finalHoursStr = finalHours.toLocaleString(undefined, {
-    maximumFractionDigits: 1,
-  });
   const displayHoursStr = animatedFinalHours.toLocaleString(undefined, {
     maximumFractionDigits: 1,
   });
-
-  const formulaText = `FV                = StudyValue × (1 + r)^Years
-                  = $${ss} × (1 + ${rr.toFixed(3)})^${nn}
-                  = $${fvStr}
-
-FreeHoursReturned = (FV ÷ ValueOfFreeHour) × EfficiencyBonus
-                  = ($${fvStr} ÷ $${ww}) × ${ee.toFixed(2)}
-                  = ${finalHours.toFixed(1)} hours
-
-ROI ratio         = ${finalHours.toFixed(1)} : 1`;
 
   function handleChange(key) {
     return (e) => {
@@ -329,17 +316,27 @@ ROI ratio         = ${finalHours.toFixed(1)} : 1`;
       <div className={styles.wrap}>
         <header className={styles.header}>
           <div className={styles.headerTop}>
-            <div className={styles.eyebrow}>
-              Illustrative model &middot; not financial advice
-            </div>
             <ThemeToggle />
           </div>
           <h1 className={styles.h1}>The Study-Hour Ledger</h1>
           <div className={styles.sub}>
-            One hour of focused, active learning today, compounded like a
-            small investment, cashed out later as hours of free time. Move
-            the sliders — the ratio is far more sensitive to <em>when</em>{" "}
-            you start than to <em>how much</em> you do.
+            On the walk to physical therapy, my son asked why I still bother
+            studying anything new — isn&rsquo;t school supposed to be the
+            only place for that? I told him about my own father, who once
+            said <em>the best investment</em> he ever made wasn&rsquo;t a
+            stock or a house — it was an hour of focused effort spent early
+            instead of late. We talked about level of effort the whole way
+            there: how doubling your hours at forty barely moves the
+            needle, but the same single hour invested at ten has decades
+            left to compound. That&rsquo;s the strange thing about time —
+            spend it early on something real, and it quietly buys you more
+            of itself later: fewer redos, faster decisions, Saturdays that
+            are actually yours instead of spent catching up. By the time we
+            reached the clinic, he&rsquo;d stopped asking why and started
+            asking <em>when</em> he should start. This calculator is that
+            conversation turned into sliders — move them and watch the
+            return on a single hour of study shift dramatically, not
+            because you did more, but because of <em>when</em> you did it.
           </div>
         </header>
 
@@ -493,26 +490,6 @@ ROI ratio         = ${finalHours.toFixed(1)} : 1`;
           <canvas ref={canvasRef} className={styles.canvas}></canvas>
         </div>
 
-        <div className={styles.formula}>
-          <h2>The formula</h2>
-          <code className={styles.formulaCode}>{formulaText}</code>
-        </div>
-
-        <div className={styles.sourcesBox}>
-          Grounding data: Heckman Equation research on early-learning ROI
-          (7–13%/yr); Georgetown CEW / SSA / Federal Reserve research on the
-          college wage premium (roughly $450K–$1.1M lifetime, ~75–86% higher
-          annual earnings). Everything else — the $/hour of study, the value
-          of a future free hour, the efficiency bonus — is a deliberately
-          adjustable assumption, not a measured fact. Treat the output as an
-          order-of-magnitude story about compounding, not a literal
-          prediction.
-        </div>
-        <div className={styles.caveat}>
-          The real driver in this model isn&rsquo;t total hours studied —
-          it&rsquo;s the compounding rate and how early it starts. Ten years
-          of head start matters more than doubling the hours.
-        </div>
       </div>
 
       {toast && (
