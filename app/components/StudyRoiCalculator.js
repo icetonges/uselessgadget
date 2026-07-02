@@ -12,6 +12,8 @@ const MILESTONES = [
   10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000,
 ];
 
+const BASE_RATE = 50; // reference wage ($/hr) — the slider's lower bound
+
 function calc(values) {
   const rr = parseFloat(values.r) / 100;
   const nn = parseFloat(values.n);
@@ -20,10 +22,16 @@ function calc(values) {
   const ee = 1 + parseFloat(values.e) / 100;
 
   const fv = ss * Math.pow(1 + rr, nn);
-  const rawHours = fv / ww;
+  // Hours of freedom at a flat baseline wage, then amplified by how much
+  // more valuable your future hour is than that baseline. A higher personal
+  // rate means less work is needed to cover the same bills, so it should
+  // scale the payoff up, not divide it away.
+  const baseHours = fv / BASE_RATE;
+  const leverage = ww / BASE_RATE;
+  const rawHours = baseHours * leverage;
   const finalHours = rawHours * ee;
 
-  return { rr, nn, ss, ww, ee, fv, rawHours, finalHours };
+  return { rr, nn, ss, ww, ee, fv, baseHours, leverage, rawHours, finalHours };
 }
 
 function magnitudeEmoji(h) {
@@ -102,7 +110,8 @@ export default function StudyRoiCalculator() {
   const { theme } = useTheme();
   const reducedMotion = useReducedMotion();
 
-  const { rr, nn, ss, ww, ee, fv, rawHours, finalHours } = calc(values);
+  const { rr, nn, ss, ww, ee, fv, baseHours, leverage, rawHours, finalHours } =
+    calc(values);
 
   const animatedFinalHours = useAnimatedNumber(
     finalHours,
@@ -341,8 +350,9 @@ export default function StudyRoiCalculator() {
           </div>
           <div className={styles.resultFoot}>
             ${ss} compounds to ${fvStr} over {nn} years →{" "}
-            {rawHours.toFixed(1)} hrs bought back → {finalHours.toFixed(1)}{" "}
-            hrs with the efficiency bonus
+            {baseHours.toFixed(1)} hrs at a ${BASE_RATE}/hr baseline,
+            &times;{leverage.toFixed(1)} for your ${ww}/hr rate →{" "}
+            {finalHours.toFixed(1)} hrs with the efficiency bonus
           </div>
           <button
             type="button"
@@ -430,16 +440,17 @@ export default function StudyRoiCalculator() {
               <span className={styles.fieldVal}>${ww}/hr</span>
             </div>
             <div className={styles.fieldNote}>
-              What an hour of your adult time is worth — used to convert the
-              compounded dollar value into hours you don&rsquo;t have to
-              work.
+              What an hour of your future time is worth. The higher your
+              personal rate, the fewer hours you need to work to cover your
+              life — so the same study investment converts into
+              proportionally more hours of freedom, not fewer.
             </div>
             <input
               className={styles.range}
               type="range"
               min="50"
-              max="300"
-              step="1"
+              max="5000"
+              step="10"
               value={values.w}
               onChange={handleChange("w")}
             />
