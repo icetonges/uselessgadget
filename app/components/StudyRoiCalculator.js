@@ -320,11 +320,11 @@ export default function StudyRoiCalculator() {
           </div>
           <h1 className={styles.h1}>The Study-Hour Ledger</h1>
           <div className={styles.tagline}>
-            Most people treat an hour of study like an expense — spent,
-            then gone. Research on early learning suggests it behaves more
-            like a seed: it compounds quietly for decades before paying out
-            as <em>freedom</em>, not just knowledge. Adjust the five levers
-            below to see exactly how much timing matters.
+            Instead of treating your best hour like an expense — spent,
+            then gone — treat it like a seed. Research on early learning
+            suggests focused effort compounds quietly for decades before it
+            pays out as <em>freedom</em>, not just skill. Adjust the five
+            levers below to see exactly how much timing matters.
           </div>
         </header>
 
