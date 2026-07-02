@@ -40,14 +40,13 @@
   overflow: visible;
 }
 
-.sub{
-  font-size: clamp(1.15rem, 4vw, 1.5rem);
+.tagline{
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
   color: var(--ink-soft);
-  line-height: 1.55;
-  max-width: 62ch;
+  line-height: 1.5;
 }
 
-.sub em{
+.tagline em{
   color: var(--gold);
   font-style: normal;
   font-weight: 700;
@@ -277,6 +276,24 @@
   height: 180px;
   display: block;
   border-radius: 12px;
+}
+
+/* ---------------- closing story ---------------- */
+
+.story{
+  margin-top: clamp(28px, 6vw, 40px);
+  border-top: 1px solid var(--line);
+  padding-top: clamp(18px, 4vw, 26px);
+  font-size: clamp(1.15rem, 4vw, 1.5rem);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 62ch;
+}
+
+.story em{
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 700;
 }
 
 /* ---------------- toast ---------------- */
