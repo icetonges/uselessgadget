@@ -479,20 +479,21 @@ export default function StudyRoiCalculator() {
         </div>
 
         <div className={styles.story}>
-          On the walk to physical therapy, my son asked why I still bother
-          studying anything new — isn&rsquo;t school supposed to be the
-          only place for that? I told him about my own father, who once
-          said <em>the best investment</em> he ever made wasn&rsquo;t a
-          stock or a house — it was an hour of focused effort spent early
-          instead of late. We talked about level of effort the whole way
-          there: how doubling your hours at forty barely moves the
-          needle, but the same single hour invested at ten has decades
-          left to compound. That&rsquo;s the strange thing about time —
-          spend it early on something real, and it quietly buys you more
-          of itself later: fewer redos, faster decisions, Saturdays that
-          are actually yours instead of spent catching up. By the time we
-          reached the clinic, he&rsquo;d stopped asking why and started
-          asking <em>when</em> he should start. This calculator is that
+          On the drive to physical therapy — after a full day of camp for
+          him and work for me — my son asked why I still bother studying
+          anything new. Isn&rsquo;t school supposed to be the only place
+          for that? I told him effort was <em>the best investment</em>{" "}
+          I&rsquo;d ever made, not because of what it earned me back then,
+          but because of <em>when</em> I made it. We talked the whole way
+          there about level of effort versus timing: how doubling your
+          hours at forty barely moves the needle, but the same single hour
+          invested at ten has decades left to compound. That&rsquo;s the
+          strange thing about time — spend it early on something real, and
+          it quietly buys you more of itself later: fewer redos, faster
+          decisions, Saturdays that are actually yours instead of spent
+          catching up. By the time we pulled into the clinic parking lot,
+          he&rsquo;d stopped asking why and started asking{" "}
+          <em>when</em> he should start. This calculator is that
           conversation turned into sliders — move them and watch the
           return on a single hour of study shift dramatically, not
           because you did more, but because of <em>when</em> you did it.

@@ -287,7 +287,6 @@
   font-size: clamp(1.15rem, 4vw, 1.5rem);
   color: var(--ink-soft);
   line-height: 1.55;
-  max-width: 62ch;
 }
 
 .story em{
