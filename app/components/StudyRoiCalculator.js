@@ -13,6 +13,7 @@ const MILESTONES = [
 ];
 
 const BASE_RATE = 50; // reference wage ($/hr) — the slider's lower bound
+const REF_COST = 30; // reference cost ($/hr) — matches the slider's default
 
 function calc(values) {
   const rr = parseFloat(values.r) / 100;
@@ -21,17 +22,27 @@ function calc(values) {
   const ww = parseFloat(values.w);
   const ee = 1 + parseFloat(values.e) / 100;
 
-  const fv = ss * Math.pow(1 + rr, nn);
+  // The intrinsic future value of one genuinely focused hour compounds on
+  // its own — it doesn't depend on what you happened to pay for it today.
+  // What ss (market value/cost of a study hour) changes is how good a deal
+  // you got: paying less than the reference cost is a bargain and should
+  // return proportionally MORE hours; paying more is a worse deal and
+  // should return proportionally fewer.
+  const fv = REF_COST * Math.pow(1 + rr, nn);
+  const costRatio = REF_COST / ss;
+
   // Hours of freedom at a flat baseline wage, then amplified by how much
   // more valuable your future hour is than that baseline. A higher personal
   // rate means less work is needed to cover the same bills, so it should
   // scale the payoff up, not divide it away.
-  const baseHours = fv / BASE_RATE;
+  const baseHours = (fv / BASE_RATE) * costRatio;
   const leverage = ww / BASE_RATE;
   const rawHours = baseHours * leverage;
   const finalHours = rawHours * ee;
 
-  return { rr, nn, ss, ww, ee, fv, baseHours, leverage, rawHours, finalHours };
+  return {
+    rr, nn, ss, ww, ee, fv, costRatio, baseHours, leverage, rawHours, finalHours,
+  };
 }
 
 function magnitudeEmoji(h) {
@@ -110,8 +121,9 @@ export default function StudyRoiCalculator() {
   const { theme } = useTheme();
   const reducedMotion = useReducedMotion();
 
-  const { rr, nn, ss, ww, ee, fv, baseHours, leverage, rawHours, finalHours } =
-    calc(values);
+  const {
+    rr, nn, ss, ww, ee, fv, costRatio, baseHours, leverage, rawHours, finalHours,
+  } = calc(values);
 
   const animatedFinalHours = useAnimatedNumber(
     finalHours,
@@ -251,7 +263,7 @@ export default function StudyRoiCalculator() {
 
     const points = [];
     for (let y = 0; y <= nn; y++) {
-      points.push(ss * Math.pow(1 + rr, y));
+      points.push(REF_COST * Math.pow(1 + rr, y));
     }
     const maxV = points[points.length - 1];
 
@@ -349,10 +361,11 @@ export default function StudyRoiCalculator() {
             </span>
           </div>
           <div className={styles.resultFoot}>
-            ${ss} compounds to ${fvStr} over {nn} years →{" "}
-            {baseHours.toFixed(1)} hrs at a ${BASE_RATE}/hr baseline,
-            &times;{leverage.toFixed(1)} for your ${ww}/hr rate →{" "}
-            {finalHours.toFixed(1)} hrs with the efficiency bonus
+            ${fvStr} intrinsic value over {nn} years →{" "}
+            &times;{costRatio.toFixed(2)} for paying ${ss}/hr instead of
+            the ${REF_COST}/hr reference, &times;{leverage.toFixed(1)} for
+            your ${ww}/hr rate → {finalHours.toFixed(1)} hrs with the
+            efficiency bonus
           </div>
           <button
             type="button"
@@ -418,8 +431,10 @@ export default function StudyRoiCalculator() {
               <span className={styles.fieldVal}>${ss}/hr</span>
             </div>
             <div className={styles.fieldNote}>
-              A rough stand-in for the &quot;cost basis&quot; — what a
-              quality hour of tutoring/deliberate instruction is worth.
+              What it costs to get a genuinely focused hour today —
+              tutoring, materials, or your own opportunity cost. Pay less
+              than the reference cost and the same future payoff returns
+              proportionally more hours; pay more, and it returns less.
             </div>
             <input
               className={styles.range}
@@ -483,8 +498,8 @@ export default function StudyRoiCalculator() {
         <div className={styles.chartbox}>
           <h2>How the value compounds over time</h2>
           <div className={styles.chartNote}>
-            Value of a single study hour, growing at rate r, year by year to
-            the payoff year.
+            Intrinsic value of one focused hour, growing at rate r, year by
+            year to the payoff year — independent of what you pay for it.
           </div>
           <canvas ref={canvasRef} className={styles.canvas}></canvas>
         </div>
