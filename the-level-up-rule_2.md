@@ -168,7 +168,61 @@ That felt better than solving ten.
 
 ---
 
-## Chapter 11: Nine
+## Chapter 11: The Brain Hacker's Cheat Code
+
+One week before the tournament, on a night when the practice set was done and the porch was warm, Bob finally asked the question he'd been carrying around for months.
+
+"Dan. Who taught *you*? Coach V?"
+
+"Coach V gave me the book." Dan spun a pedal slowly with one finger. "But before the book, there was Leo."
+
+"Who's Leo?"
+
+"My big brother. He's away at college now." Dan smiled at the bike. "Straight-A student his whole life, and here's the part that used to drive me crazy: he never looked stressed. Sports, friends, games, top grades — all of it, like it cost him nothing. Meanwhile, when I was exactly your age, I had two undeniable superpowers: I could play a role-playing game for six hours without breaking focus, and I could read a soccer field the way you read a Battlefield map. But the second I sat down with a textbook? My brain felt like it was trying to dribble a flat ball through a swamp. Ten minutes of reading and I wanted a nap."
+
+"You?" Bob said. "*You* couldn't study?"
+
+"One night I had my forehead flat on this giant dusty science book, and I groaned, 'Why can't school be as fun as leveling up in a game?' And from the doorway, Leo said: 'Because you're playing the game wrong.'"
+
+Dan pulled up an invisible chair, the way his brother must have, all those years ago.
+
+"He told me something no teacher had ever told me. When you score a goal, or level up, or beat a boss, your brain releases a chemical called dopamine. The reward chemical. It's the little burst of *awesome* that makes you want to keep playing. And when you stare at a textbook doing nothing? Zero dopamine. Your brain isn't broken — it's bored, chemically bored. 'You can't force your brain to love studying,' Leo said. 'You have to hack it. You have to make studying addictive.' Then he gave me his four cheat codes."
+
+Bob leaned in. Origin stories were his favorite kind.
+
+"**Cheat Code One: The Quest System.** Never sit down and say 'I'm going to study science.' That's like a game telling you 'go save the world' without giving you a map — your brain hates vague instructions. You need quests. Set a timer for fifteen minutes. Your quest: conquer five practice questions before the buzzer. And when you finish — this part matters — grab a red marker and draw a massive, satisfying checkmark next to your work. That instant visual feedback gives your brain its hit of dopamine, exactly like watching your EXP bar go up."
+
+"Wait." Bob sat up. "That's tiny missions. And fast feedback. That's rule two and rule five!"
+
+"Where do you think the napkins came from?" Dan grinned. "Leo called them cheat codes. The crazy book called them rules. Same weapons, different names — the book just explained *why* they work. Now keep listening, because you haven't heard them all."
+
+"**Cheat Code Two: The 3-Second Rule.** 'Your brain is sneaky,' Leo told me. 'If you give it time to think, it invents excuses: I'm tired. I need water first. My room is messy.' You have to beat your brain to the punch. Count down — three, two, one, go. And don't promise it an hour of studying. Tell yourself one thing: *I am going to stand up and touch the cover of my book.* That's it. That's the whole mission. Because once your body is in motion, your brain stops complaining and shifts into gear to follow along."
+
+"The launch," Bob said.
+
+"The launch," Dan agreed. "Leo got there first."
+
+"**Cheat Code Three: The Goldilocks Zone.** If a topic makes you want to pull your hair out, you're fighting a boss you aren't leveled up for — drop back and farm the easier foundation stuff first. If it's too easy, you'll get bored — so turn it into a speedrun and beat it in half the time. You want the difficulty *just right*: hard enough to challenge you, easy enough that you can win."
+
+"Rule seven."
+
+"Rule seven. Told you my brother was good." Dan held up one finger. "But this last one — this one isn't on any napkin I've given you. So listen."
+
+"**Cheat Code Four: The Sleep Save-Point.** Here's the ultimate secret for memory. Rereading a chapter ten times is nearly useless — your brain looks at the page and thinks, *I already see this, I don't need to save it.* So don't reread. Read two pages, close the book, and explain what you just read out loud, like you're teaching it." He nodded at Bob. "You already discovered that half with Theo. But here's the half you don't know. The best time to save your progress is right before bed. Five minutes before you fall asleep, close your eyes and play a fast-forward movie in your head of the most important things you learned that day. While you sleep, your brain sorts through everything that happened and decides what to keep — and it prioritizes the movie. You're hitting a save-point, in the dark, for free, every single night."
+
+Bob was quiet for a second, doing the math on it. "Does it actually work?"
+
+"You know what my first quest ever was?" Dan said. "History test. I was on the couch, controller calling my name, big test coming, every excuse loading up. And then I thought: *three, two, one, go.* I stood up and touched my notes. Just touched them. Once I was standing there anyway, I figured I might as well sit down. I didn't write 'study history' — I set a timer for twenty minutes with one quest: memorize the three causes of the Revolutionary War. When that timer beeped, I slammed down a red checkmark so big it tore the page a little, and I felt it — the little spark in the chest. Level up. That night I lay in the dark and played the movie: the causes, in order, like a cinematic cutscene. And on test day, for the first time in my life, I wasn't dragging myself through a swamp. I looked at the paper, picked up my pencil, and smiled." He spun the pedal again. "I was in the zone. And I was ready to win."
+
+So that week, Bob added the fourth cheat code to the system. Every night, after the planner and the five boxes: lights off, eyes closed, five-minute fast-forward movie of the day — the moves drilled, the monsters slain, one geometry door finally creaking open. Hit save. Sleep.
+
+The system had an inheritance now, and Bob could trace the whole line: Leo to Dan, Dan to the napkins, Coach V's crazy book underneath it all, and — someday, when the moment was right — Bob to Theo.
+
+---
+
+## Chapter 12: Nine
+
+The night before the tournament, Bob didn't cram. Cramming was for players without a system. He ran one easy warm-up set for confidence, filled out the planner, checked his five boxes — and then, lights off, he hit the save-point: a five-minute fast-forward movie of six weeks of training. Small cases waving. Cycles looping. The Goblin's favorite ambush spot. The clean square of desk. He fell asleep somewhere in the middle of the movie, which Dan said was exactly how it was supposed to work.
 
 Tournament day. A school cafeteria two towns over, folding tables in long rows, three hundred kids, and a proctor reading rules through a microphone that crackled like a campfire.
 
@@ -230,7 +284,7 @@ Bob read it twice. Then he borrowed a pencil, and right underneath, he started p
 
 Part One gave you the Level-Up Rule: fast feedback, control, balance, and reps instead of talent. Part Two is about the fight that comes *before* the math — because most study battles are lost in the first five seconds, at the door of the room.
 
-Start with the crazy book's big idea, because everything else hangs from it. Most people think studying is supposed to feel painful. Wrong. Your brain does not hate learning — it loves learning. It memorized game maps, song lyrics, soccer plays, and a hundred random facts without anyone forcing it. Your brain is already an addict; it just refuses to get hooked on gray walls. So the goal is not to become a homework robot, and it is not to push harder on the wall. The goal is to build a learning system that makes your brain *want to start* — that gets it hooked on hard things the same way games hook it. Walls say *push harder.* Doors say *open me and see what happens.* The seven rules below are how you build doors.
+Start with the crazy book's big idea, because everything else hangs from it. Most people think studying is supposed to feel painful. Wrong. Your brain does not hate learning — it loves learning. It memorized game maps, song lyrics, soccer plays, and a hundred random facts without anyone forcing it. And the hook has a name: dopamine, the reward chemical your brain releases every time you score, level up, or beat a boss. Games are engineered to pour it out. A textbook, stared at, releases none. That's the whole difference — not your brain, the design. Your brain is already an addict; it just refuses to get hooked on gray walls. So the goal is not to become a homework robot, and it is not to push harder on the wall. The goal is to build a learning system that makes your brain *want to start* — that gets it hooked on hard things the same way games hook it. Walls say *push harder.* Doors say *open me and see what happens.* The seven rules below are how you build doors.
 
 Here they are, straight from the book to Dan's napkin to you. They work on any subject, any deep end, starting tonight.
 
@@ -254,6 +308,9 @@ Draw five small boxes. Check one for every tiny mission finished. Every check is
 
 **Rule seven. Find the perfect challenge.**
 Too easy is boring; too hard is a wall with spikes. Hunt the middle: *I can't do this instantly, but I can figure it out.* Warm up easy, build with medium, stretch with one hard. And when a real test hands you nine out of thirty — read the whole wall before you decide what the number means. Some tests aren't asking if you can finish the mountain. They're measuring how fast you climb.
+
+**Bonus cheat code. The Sleep Save-Point.**
+This one is older than the book itself — it came from Dan's big brother Leo. Rereading a chapter ten times is nearly useless; your brain sees the page and thinks *already have it, no need to save.* So read a little, close the book, and explain it out loud. Then, five minutes before you fall asleep, play a fast-forward movie in your head of the most important things you learned today. While you sleep, your brain decides what to keep — and it keeps the movie. A free save-point, every single night.
 
 Willpower gets tired. Systems don't.
 
