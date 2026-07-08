@@ -465,19 +465,44 @@ export default function AudiobookPage() {
       progFill.style.width = (current / (flatUnits.length - 1)) * 100 + "%";
     }
 
+    // Chrome (and some other browsers) will silently stall an in-progress
+    // utterance after ~15s once the tab is backgrounded/minimized. Nudging
+    // the engine with a harmless pause/resume keeps it talking so playback
+    // continues uninterrupted in the background until the user pauses it
+    // or the story ends.
+    let keepAliveTimer = null;
+    function startKeepAlive() {
+      stopKeepAlive();
+      keepAliveTimer = setInterval(() => {
+        if (isPlaying && synth.speaking) {
+          synth.pause();
+          synth.resume();
+        }
+      }, 10000);
+    }
+    function stopKeepAlive() {
+      if (keepAliveTimer) {
+        clearInterval(keepAliveTimer);
+        keepAliveTimer = null;
+      }
+    }
+
     function play() {
       isPlaying = true;
       btnPlay.textContent = "⏸";
+      startKeepAlive();
       speakCurrent();
     }
     function pause() {
       isPlaying = false;
+      stopKeepAlive();
       synth.cancel();
       btnPlay.textContent = "▶";
       highlight();
     }
     function stop() {
       isPlaying = false;
+      stopKeepAlive();
       synth.cancel();
       btnPlay.textContent = "▶";
       mapEl.querySelectorAll(".lvl").forEach((l) => l.classList.remove("playing"));
@@ -527,9 +552,6 @@ export default function AudiobookPage() {
       if (e.code === "ArrowRight") jumpTo(current + 1);
       if (e.code === "ArrowLeft") jumpTo(current - 1);
     }
-    function onVisibilityChange() {
-      if (document.hidden && isPlaying) pause();
-    }
 
     const btnFwd = document.getElementById("abkBtnFwd");
     const btnBack = document.getElementById("abkBtnBack");
@@ -545,12 +567,12 @@ export default function AudiobookPage() {
     rateInput.addEventListener("input", onRateInput);
     progEl.addEventListener("click", onProgClick);
     document.addEventListener("keydown", onKeydown);
-    document.addEventListener("visibilitychange", onVisibilityChange);
 
     highlight();
 
     return () => {
       isPlaying = false;
+      stopKeepAlive();
       synth.cancel();
       if (synth.onvoiceschanged === loadVoices) synth.onvoiceschanged = null;
       btnPlay.removeEventListener("click", onPlayClick);
@@ -562,7 +584,6 @@ export default function AudiobookPage() {
       rateInput.removeEventListener("input", onRateInput);
       progEl.removeEventListener("click", onProgClick);
       document.removeEventListener("keydown", onKeydown);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
       readerEl.innerHTML = "";
       mapEl.innerHTML = "";
     };
