@@ -22,14 +22,20 @@ const AUDIOBOOK_CSS = `
 .abk-root *{box-sizing:border-box}
 .abk-root .wrap{max-width:860px;margin:0 auto;padding:28px 20px 220px}
 @media (min-width:900px){
-  .abk-root .wrap{max-width:1180px;padding:28px 24px 60px}
+  .abk-root .wrap{max-width:1180px;padding:28px 24px 60px;margin-left:356px;margin-right:24px}
 }
 
-/* ---------- desktop two-column layout: left nav (audio + chapters), reader on the right ---------- */
+/* ---------- desktop layout: fixed left nav rail (audio + chapters), header/reader
+   both stay full-width so the reading pane matches the header above it ---------- */
 .abk-root .layout{margin-top:22px}
 @media (min-width:900px){
-  .abk-root .layout{display:grid;grid-template-columns:308px 1fr;gap:32px;align-items:start}
-  .abk-root .sidebar{position:sticky;top:20px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 40px);overflow-y:auto;padding-right:2px}
+  .abk-root .layout{display:block}
+  .abk-root .sidebar{
+    position:fixed;left:24px;top:24px;
+    width:300px;max-height:calc(100vh - 48px);overflow-y:auto;
+    display:flex;flex-direction:column;gap:16px;
+    z-index:140;
+  }
 }
 .abk-root .to-top{
   position:fixed;right:18px;bottom:132px;z-index:160;
@@ -132,9 +138,6 @@ const AUDIOBOOK_CSS = `
 
 /* ---------- reading pane ---------- */
 .abk-root .reader{margin-top:26px}
-@media (min-width:900px){
-  .abk-root .reader{margin-top:0;min-width:0}
-}
 .abk-root .ch-head{
   font-family:'Chakra Petch',sans-serif;
   color:var(--amber);
