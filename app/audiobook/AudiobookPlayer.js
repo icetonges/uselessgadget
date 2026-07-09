@@ -21,6 +21,29 @@ const AUDIOBOOK_CSS = `
 }
 .abk-root *{box-sizing:border-box}
 .abk-root .wrap{max-width:860px;margin:0 auto;padding:28px 20px 220px}
+@media (min-width:900px){
+  .abk-root .wrap{max-width:1180px;padding:28px 24px 60px}
+}
+
+/* ---------- desktop two-column layout: left nav (audio + chapters), reader on the right ---------- */
+.abk-root .layout{margin-top:22px}
+@media (min-width:900px){
+  .abk-root .layout{display:grid;grid-template-columns:308px 1fr;gap:32px;align-items:start}
+  .abk-root .sidebar{position:sticky;top:20px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 40px);overflow-y:auto;padding-right:2px}
+}
+.abk-root .to-top{
+  position:fixed;right:18px;bottom:132px;z-index:160;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--panel2);border:1px solid var(--line);color:var(--paper);
+  display:grid;place-items:center;font-size:18px;cursor:pointer;
+  transition:border-color .15s, background .15s, transform .08s, opacity .2s;
+  opacity:.85;
+}
+.abk-root .to-top:hover{border-color:var(--amber);opacity:1}
+.abk-root .to-top:active{transform:scale(.94)}
+@media (min-width:900px){
+  .abk-root .to-top{bottom:28px}
+}
 
 /* ---------- header ---------- */
 .abk-root header{
@@ -71,7 +94,12 @@ const AUDIOBOOK_CSS = `
 }
 
 /* ---------- chapter map ---------- */
-.abk-root .map{margin-top:22px;display:grid;gap:8px}
+.abk-root .map{
+  display:grid;gap:8px;
+  border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(160deg,var(--panel2),var(--panel));
+  padding:16px 16px 12px;
+}
 .abk-root .map-title{
   font-family:'Chakra Petch',sans-serif;font-size:11px;letter-spacing:.24em;text-transform:uppercase;
   color:var(--dim);margin:6px 2px;
@@ -104,6 +132,9 @@ const AUDIOBOOK_CSS = `
 
 /* ---------- reading pane ---------- */
 .abk-root .reader{margin-top:26px}
+@media (min-width:900px){
+  .abk-root .reader{margin-top:0;min-width:0}
+}
 .abk-root .ch-head{
   font-family:'Chakra Petch',sans-serif;
   color:var(--amber);
@@ -140,14 +171,31 @@ const AUDIOBOOK_CSS = `
 .abk-root .reader li.now{background:rgba(89,211,162,.10);border-left-color:var(--radio);color:#fff}
 .abk-root .divider{border:none;border-top:1px solid var(--line);margin:30px 0}
 
-/* ---------- player bar ---------- */
-.abk-root .player{
+/* ---------- player bar (mobile: fixed bottom bar; desktop: sticky sidebar card, see below) ---------- */
+.abk-root .side-player{
   position:fixed;left:0;right:0;bottom:0;z-index:150;
   background:rgba(14,20,32,.92);
   backdrop-filter:blur(14px);
   border-top:1px solid var(--line);
 }
-.abk-root .player-inner{max-width:860px;margin:0 auto;padding:14px 20px 18px}
+.abk-root .side-player-inner{max-width:860px;margin:0 auto;padding:14px 20px 18px}
+@media (min-width:900px){
+  .abk-root .side-player{
+    position:static;left:auto;right:auto;bottom:auto;
+    background:linear-gradient(160deg,var(--panel2),var(--panel));
+    border:1px solid var(--line);border-radius:16px;
+    backdrop-filter:none;
+  }
+  .abk-root .side-player-inner{max-width:none;padding:16px}
+  .abk-root .side-player .row{flex-direction:column;align-items:stretch;gap:14px;margin-top:14px}
+  .abk-root .side-player .ctrl{justify-content:center}
+  .abk-root .side-player .now-line{
+    flex-basis:auto;white-space:normal;overflow:visible;text-overflow:clip;font-size:12px;text-align:center;
+  }
+  .abk-root .side-player .opts{flex-direction:column;align-items:stretch}
+  .abk-root .side-player select,.abk-root .side-player .rate{max-width:none;width:100%}
+  .abk-root .side-player .rate{justify-content:space-between}
+}
 .abk-root .prog{
   height:5px;border-radius:99px;background:var(--panel2);overflow:hidden;cursor:pointer;
 }
@@ -580,84 +628,97 @@ export default function AudiobookPlayer({ cfg }) {
           </h1>
           <p className="sub">{cfg.subtitle}</p>
           <div className="narrator">{cfg.narratorLine}</div>
-
-          <div className="map">
-            <div className="map-title">{cfg.mapTitle}</div>
-            <div ref={mapRef} id={cfg.ids.chapterMap}></div>
-          </div>
         </header>
 
-        <main className="reader" ref={readerRef} id={cfg.ids.reader}></main>
-      </div>
-
-      <div className="player">
-        <div className="player-inner">
-          <div className="prog" ref={progRef} id={cfg.ids.prog}>
-            <div className="fill" ref={progFillRef} id={cfg.ids.progFill}></div>
-          </div>
-          <div className="row">
-            <div
-              className="now-line"
-              ref={nowLineRef}
-              id={cfg.ids.nowLine}
-              dangerouslySetInnerHTML={{ __html: cfg.readyHTML }}
-            ></div>
-            <div className="ctrl">
-              <button
-                className="icon"
-                id={cfg.ids.prev}
-                title={cfg.prevChapterTitle}
-                aria-label={cfg.prevChapterTitle}
-              >
-                ⏮
-              </button>
-              <button className="icon" id={cfg.ids.back} title={cfg.backTitle} aria-label={cfg.backTitle}>
-                ↺
-              </button>
-              <button className="icon play" ref={btnPlayRef} title={cfg.playTitle} aria-label={cfg.playTitle}>
-                ▶
-              </button>
-              <button className="icon" id={cfg.ids.fwd} title={cfg.fwdTitle} aria-label={cfg.fwdTitle}>
-                ↻
-              </button>
-              <button
-                className="icon"
-                id={cfg.ids.next}
-                title={cfg.nextChapterTitle}
-                aria-label={cfg.nextChapterTitle}
-              >
-                ⏭
-              </button>
-            </div>
-            <div className="opts">
-              <select
-                ref={voiceSelRef}
-                id={cfg.ids.voiceSel}
-                title={cfg.narratorSelectLabel}
-                aria-label={cfg.narratorSelectLabel}
-              ></select>
-              <div className="rate">
-                {cfg.speedLabel}{" "}
-                <input
-                  type="range"
-                  ref={rateInputRef}
-                  id={cfg.ids.rate}
-                  min="0.6"
-                  max="1.4"
-                  step="0.05"
-                  defaultValue="0.95"
-                />
-                <span ref={rateValRef} id={cfg.ids.rateVal}>
-                  0.95×
-                </span>
+        <div className="layout">
+          <aside className="sidebar">
+            <div className="side-player">
+              <div className="side-player-inner">
+                <div className="prog" ref={progRef} id={cfg.ids.prog}>
+                  <div className="fill" ref={progFillRef} id={cfg.ids.progFill}></div>
+                </div>
+                <div className="row">
+                  <div
+                    className="now-line"
+                    ref={nowLineRef}
+                    id={cfg.ids.nowLine}
+                    dangerouslySetInnerHTML={{ __html: cfg.readyHTML }}
+                  ></div>
+                  <div className="ctrl">
+                    <button
+                      className="icon"
+                      id={cfg.ids.prev}
+                      title={cfg.prevChapterTitle}
+                      aria-label={cfg.prevChapterTitle}
+                    >
+                      ⏮
+                    </button>
+                    <button className="icon" id={cfg.ids.back} title={cfg.backTitle} aria-label={cfg.backTitle}>
+                      ↺
+                    </button>
+                    <button className="icon play" ref={btnPlayRef} title={cfg.playTitle} aria-label={cfg.playTitle}>
+                      ▶
+                    </button>
+                    <button className="icon" id={cfg.ids.fwd} title={cfg.fwdTitle} aria-label={cfg.fwdTitle}>
+                      ↻
+                    </button>
+                    <button
+                      className="icon"
+                      id={cfg.ids.next}
+                      title={cfg.nextChapterTitle}
+                      aria-label={cfg.nextChapterTitle}
+                    >
+                      ⏭
+                    </button>
+                  </div>
+                  <div className="opts">
+                    <select
+                      ref={voiceSelRef}
+                      id={cfg.ids.voiceSel}
+                      title={cfg.narratorSelectLabel}
+                      aria-label={cfg.narratorSelectLabel}
+                    ></select>
+                    <div className="rate">
+                      {cfg.speedLabel}{" "}
+                      <input
+                        type="range"
+                        ref={rateInputRef}
+                        id={cfg.ids.rate}
+                        min="0.6"
+                        max="1.4"
+                        step="0.05"
+                        defaultValue="0.95"
+                      />
+                      <span ref={rateValRef} id={cfg.ids.rateVal}>
+                        0.95×
+                      </span>
+                    </div>
+                  </div>
+                  <div className="voice-note" ref={voiceNoteRef} id={cfg.ids.voiceNote}>
+                    {cfg.loadingVoicesText}
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="voice-note" ref={voiceNoteRef} id={cfg.ids.voiceNote}>
-              {cfg.loadingVoicesText}
+
+            <div className="map">
+              <div className="map-title">{cfg.mapTitle}</div>
+              <div ref={mapRef} id={cfg.ids.chapterMap}></div>
             </div>
-          </div>
+          </aside>
+
+          <main className="reader" ref={readerRef} id={cfg.ids.reader}></main>
         </div>
       </div>
+
+      <button
+        className="to-top"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Back to top"
+        title="Back to top"
+      >
+        ↑
+      </button>
     </div>
   );
 }
