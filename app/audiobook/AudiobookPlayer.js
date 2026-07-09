@@ -22,7 +22,7 @@ const AUDIOBOOK_CSS = `
 .abk-root *{box-sizing:border-box}
 .abk-root .wrap{max-width:860px;margin:0 auto;padding:28px 20px 220px}
 @media (min-width:900px){
-  .abk-root .wrap{max-width:1180px;padding:28px 24px 60px;margin-left:356px;margin-right:24px}
+  .abk-root .wrap{max-width:1180px;padding:28px 24px 60px;margin-left:376px;margin-right:24px}
 }
 
 /* ---------- desktop layout: fixed left nav rail (audio + chapters), header/reader
@@ -32,8 +32,9 @@ const AUDIOBOOK_CSS = `
   .abk-root .layout{display:block}
   .abk-root .sidebar{
     position:fixed;left:24px;top:76px;
-    width:300px;max-height:calc(100vh - 100px);overflow-y:auto;
+    width:320px;max-height:calc(100vh - 100px);overflow-y:auto;
     display:flex;flex-direction:column;gap:16px;
+    padding-right:14px;box-sizing:border-box;
     z-index:140;
   }
 }
