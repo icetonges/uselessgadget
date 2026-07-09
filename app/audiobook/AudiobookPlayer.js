@@ -231,6 +231,17 @@ const AUDIOBOOK_CSS = `
   font-family:'Chakra Petch',sans-serif;font-size:12px;
   border-radius:9px;padding:8px 10px;max-width:200px;
 }
+.abk-root select{
+  appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  padding-right:30px;
+  text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--dim) 50%),
+    linear-gradient(135deg, var(--dim) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 55%, calc(100% - 12px) 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat:no-repeat;
+}
 .abk-root .rate{display:flex;align-items:center;gap:8px}
 .abk-root input[type=range]{accent-color:var(--amber);width:90px}
 .abk-root .voice-note{
