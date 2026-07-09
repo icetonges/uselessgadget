@@ -473,12 +473,12 @@ export default function AudiobookPlayer({ cfg }) {
       highlight();
     }
 
-    function highlight() {
+    function highlight(shouldScroll = true) {
       flatUnits.forEach((u) => u.el.classList.remove("now"));
       const u = flatUnits[current];
       if (!u) return;
       u.el.classList.add("now");
-      u.el.scrollIntoView({ block: "center", behavior: "smooth" });
+      if (shouldScroll) u.el.scrollIntoView({ block: "center", behavior: "smooth" });
       mapEl.querySelectorAll(".lvl").forEach((l) => {
         const on = +l.dataset.ch === u.chapter;
         l.classList.toggle("active", on);
@@ -599,7 +599,7 @@ export default function AudiobookPlayer({ cfg }) {
     progEl.addEventListener("click", onProgClick);
     document.addEventListener("keydown", onKeydown);
 
-    highlight();
+    highlight(false); // initial paint only — don't auto-scroll the page on load
 
     return () => {
       isPlaying = false;
