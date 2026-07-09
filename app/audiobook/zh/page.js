@@ -17,12 +17,12 @@ const ZH_CFG = {
   mapTitle: "任务选单",
   debriefText: "复盘 — 你的任务从这里开始",
 
-  titleStripRegex: /^第\d+章：|^你的任务：/,
+  titleStripRegex: /^第\d+关：/,
   titleSplitChar: "：",
-  isDebrief: (ch) => ch.title.startsWith("你的任务"),
+  isDebrief: (ch) => ch.title.includes("你的任务"),
   levelHeadText: (ci) => `第 ${ci + 1} 关`,
 
-  readyHTML: "<b>准备就绪</b> — 按下播放键，开始第1章",
+  readyHTML: "<b>准备就绪</b> — 按下播放键，开始第1关",
   completeHTML: "<b>任务完成</b> — 使命达成。可重新播放上方任意关卡。",
   onAirLabel: "播放中",
   pausedLabel: "已暂停",
