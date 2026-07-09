@@ -31,8 +31,8 @@ const AUDIOBOOK_CSS = `
 @media (min-width:900px){
   .abk-root .layout{display:block}
   .abk-root .sidebar{
-    position:fixed;left:24px;top:24px;
-    width:300px;max-height:calc(100vh - 48px);overflow-y:auto;
+    position:fixed;left:24px;top:76px;
+    width:300px;max-height:calc(100vh - 100px);overflow-y:auto;
     display:flex;flex-direction:column;gap:16px;
     z-index:140;
   }
@@ -291,6 +291,17 @@ export default function AudiobookPlayer({ cfg }) {
   const nowLineRef = useRef(null);
   const progFillRef = useRef(null);
   const progRef = useRef(null);
+
+  // Always land at the true top of the page on mount, so the sticky site
+  // navbar never ends up pinned over a partially-scrolled header (which
+  // happens if the browser restores a previous scroll position on load).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const BOOK = cfg.book;
