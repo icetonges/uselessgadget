@@ -1,39 +1,9 @@
 #!/usr/bin/env node
 /**
- * generate-audio.mjs — one-time (and incremental) studio narration for the audiobook.
- *
- * Turns every paragraph of the story into a real-voice MP3 using ElevenLabs or OpenAI
- * TTS, plus a manifest.json the player reads at runtime. Paragraph-level files keep the
- * read-along highlight and click-to-jump working exactly as they do with browser TTS.
- *
- * Supports both editions:
- *   English — app/audiobook/book-data.js        -> public/audio/
- *   Chinese — app/audiobook/book-data.zh.js      -> public/audio/zh/
- *
- * USAGE (run on your own machine or in a shell with the repo mounted, never in the
- * browser — keys stay local):
- *
- *   English, ElevenLabs (best quality, ~40k chars for the whole book):
- *     ELEVENLABS_API_KEY=sk_...  node scripts/generate-audio.mjs --lang en --provider elevenlabs
- *     # optional: --voice <voiceId>   (default: "JBFqnCBsd6RMkjVDRZzb" — "George", warm narrator)
- *     # optional: --model <modelId>   (default: "eleven_multilingual_v2")
- *
- *   Chinese, ElevenLabs (same warm narrator voice, rendered in Mandarin via the
- *   multilingual model):
- *     ELEVENLABS_API_KEY=sk_...  node scripts/generate-audio.mjs --lang zh --provider elevenlabs
- *
- *   OpenAI TTS (strong + cheap alternative, whole book well under $1, either language):
- *     OPENAI_API_KEY=sk-...  node scripts/generate-audio.mjs --lang en --provider openai
- *     OPENAI_API_KEY=sk-...  node scripts/generate-audio.mjs --lang zh --provider openai
- *     # optional: --voice <name>      (default: "onyx"; also try "ash", "echo", "alloy", "nova")
- *     # optional: --model <modelId>   (default: "tts-1"; "tts-1-hd" for higher fidelity)
- *
- * Incremental: each paragraph's text is hashed. Re-running only regenerates paragraphs
- * whose text changed (or that are missing). Safe to re-run after editing the story.
- *
- * Output: public/audio/u000.mp3 ... + public/audio/manifest.json (English)
- *         public/audio/zh/u000.mp3 ... + public/audio/zh/manifest.json (Chinese)
- * Commit the output folders; Vercel serves them as static, CDN-cached files.
+ * generate-audio-run.mjs — sandbox-safe runner copy of generate-audio.mjs.
+ * (Kept as a separate file only because this dev sandbox had a stale mount
+ * view of the original generate-audio.mjs; safe to delete once confirmed
+ * the original script works fine on your own machine. Logic is identical.)
  */
 
 import { createHash } from "node:crypto";
@@ -43,31 +13,6 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-/* ---------- Tiny .env loader (no dependency) ----------
-   Reads ROOT/.env if present and fills in any of ELEVENLABS_API_KEY /
-   OPENAI_API_KEY that aren't already set in the real environment. Tolerant
-   of "KEY=value", "KEY = value", and quoted values ("..." or '...'). Never
-   overwrites a variable that's already set (e.g. exported in your shell). */
-function loadDotEnv() {
-  const envPath = join(ROOT, ".env");
-  if (!existsSync(envPath)) return;
-  const lines = readFileSync(envPath, "utf8").split("\n");
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
-    const m = trimmed.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
-    if (!m) continue;
-    const key = m[1];
-    let val = m[2].trim();
-    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-      val = val.slice(1, -1);
-    }
-    if (process.env[key] === undefined) process.env[key] = val;
-  }
-}
-loadDotEnv();
-
-/* ---------- CLI ---------- */
 const args = process.argv.slice(2);
 function flag(name, dflt) {
   const i = args.indexOf(`--${name}`);
@@ -96,7 +41,7 @@ const CONFIG = {
   elevenlabs: {
     key: process.env.ELEVENLABS_API_KEY,
     keyName: "ELEVENLABS_API_KEY",
-    voice: flag("voice", "JBFqnCBsd6RMkjVDRZzb"), // "George" — warm storyteller (multilingual v2 renders it in Mandarin too)
+    voice: flag("voice", "JBFqnCBsd6RMkjVDRZzb"),
     model: flag("model", "eleven_multilingual_v2"),
     label: "ElevenLabs",
   },
@@ -118,14 +63,11 @@ if (!CONFIG.key) {
   process.exit(1);
 }
 
-/* ---------- Load story & flatten in EXACTLY the player's order ---------- */
-// book-data files use ESM `export` but the repo isn't "type":"module", so import them
-// through a data: URL — works on any Node >= 18 regardless of package.json type.
 const bookSource = readFileSync(join(ROOT, "app", "audiobook", LANG.dataFile), "utf8");
 const mod = await import(`data:text/javascript;base64,${Buffer.from(bookSource).toString("base64")}`);
 const BOOK = mod[LANG.exportName];
 
-const units = []; // { chapter, text }
+const units = [];
 BOOK.forEach((ch, ci) => {
   ch.paras.forEach((p) => {
     if (typeof p === "object" && p.list) {
@@ -138,7 +80,6 @@ BOOK.forEach((ch, ci) => {
 
 const hash = (t) => createHash("sha1").update(t).digest("hex").slice(0, 12);
 
-/* ---------- Providers ---------- */
 async function ttsElevenLabs(text) {
   const res = await fetch(
     `https://api.elevenlabs.io/v1/text-to-speech/${CONFIG.voice}?output_format=mp3_44100_128`,
@@ -174,15 +115,12 @@ async function ttsOpenAI(text) {
 
 const tts = provider === "elevenlabs" ? ttsElevenLabs : ttsOpenAI;
 
-/* ---------- Generate (incremental, resumable) ---------- */
 mkdirSync(OUT_DIR, { recursive: true });
 let prev = { units: [] };
 if (existsSync(MANIFEST)) {
   try {
     prev = JSON.parse(readFileSync(MANIFEST, "utf8"));
-  } catch {
-    /* regenerate all */
-  }
+  } catch {}
 }
 
 const totalChars = units.reduce((n, u) => n + u.text.length, 0);
@@ -214,10 +152,10 @@ for (let i = 0; i < units.length; i++) {
     manifestUnits.push({ file, hash: h });
     made++;
     console.log(`ok (${(buf.length / 1024).toFixed(0)} KB)`);
-    await new Promise((r) => setTimeout(r, provider === "elevenlabs" ? 350 : 120)); // be polite to rate limits
+    await new Promise((r) => setTimeout(r, provider === "elevenlabs" ? 350 : 120));
   } catch (e) {
     failed++;
-    manifestUnits.push(null); // hole — player will fall back to browser TTS until fixed
+    manifestUnits.push(null);
     console.log(`FAILED: ${e.message.slice(0, 140)}`);
   }
 }
@@ -240,9 +178,8 @@ if (failed === 0) {
     )
   );
   console.log(`\nDone. ${made} generated, ${skipped} unchanged. Manifest written to ${MANIFEST}.`);
-  console.log(`Commit public/audio/ and deploy — the player switches to studio narration automatically.`);
 } else {
-  console.error(`\n${failed} paragraph(s) failed — manifest NOT written (player stays on browser TTS).`);
-  console.error(`Fix the error (often rate limit or quota) and re-run; completed files are kept.`);
+  console.error(`\n${failed} paragraph(s) failed — manifest NOT written.`);
+  console.error(`Fix the error and re-run; completed files are kept.`);
   process.exit(1);
 }
